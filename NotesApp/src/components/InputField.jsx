@@ -41,13 +41,13 @@ const InputField = () => {
       <div className="flex flex-col justify-center items-center w-full my-5 ">
         <form className=" flex flex-col" onSubmit={handlebtn}>
           <textarea
-            style={{ height: "250px" }}
+            style={{ height: "200px" }}
             placeholder="Enter text"
             value={textInput}
             onChange={(e) => {
               setTextInput(e.target.value);
             }}
-            className="border border-black px-4 py-1 rounded-md outline-none"
+            className="border border-black px-4 py-1 rounded-md outline-none resize-none"
           ></textarea>
           <button
             type="submit"
