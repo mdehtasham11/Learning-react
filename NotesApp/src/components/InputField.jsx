@@ -5,12 +5,16 @@ import Container from "./Container";
 const InputField = () => {
   const [notes, setnotes] = useState();
   const [textInput, setTextInput] = useState();
+  const [title, settitle] = useState();
   const handlebtn = (e) => {
     e.preventDefault();
     window.location.reload();
-    console.log(textInput);
+    // console.log(textInput);
     const key = Date.now().toString();
-    localStorage.setItem(key, textInput);
+    const InputData = { title, textInput };
+    const InputStringData = JSON.stringify(InputData);
+    // console.log(InputStringData);
+    localStorage.setItem(key, InputStringData);
   };
 
   const handleDeleteNote = (key) => {
@@ -23,23 +27,30 @@ const InputField = () => {
 
   useEffect(() => {
     const localStorageData = () => {
-      const data = {};
+      const storedNotes = {};
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        data[key] = localStorage.getItem(key);
+        const storedData = JSON.parse(localStorage.getItem(key));
+        storedNotes[key] = storedData;
       }
 
-      setnotes(data);
+      setnotes(storedNotes);
     };
 
     localStorageData();
   }, []);
   return (
-    <div
-      className="flex flex-wrap w-full justify-center"
-    >
+    <div className="flex flex-wrap w-full justify-center">
       <div className="flex flex-col justify-center items-center w-full my-5 ">
         <form className=" flex flex-col" onSubmit={handlebtn}>
+          <textarea
+            placeholder="Enter title"
+            className="flex justify-center border border-black px-4  mb-2 rounded-md outline-none resize-none "
+            value={title}
+            onChange={(e) => {
+              settitle(e.target.value);
+            }}
+          ></textarea>
           <textarea
             style={{ height: "200px" }}
             placeholder="Enter text"
