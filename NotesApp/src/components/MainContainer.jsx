@@ -1,15 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-const Container = ({ name, desc }) => {
+const MainContainer = ({ value, keynote, onDelete }) => {
   const handleDelete = () => {
     onDelete(keynote);
   };
+  // console.log(value.title)
 
   return (
     <div className="flex flex-col border border-black rounded-md w-56 h-54 px-2 mx-4 my-4 mt-8">
-      <h3 className=" font-bold">{name}</h3>
-      <div>{desc}</div>
+      <h3 className=" font-bold">{value.title}</h3>
+      <div>{value.textInput}</div>
       <div className="flex flex-wrap my-2 gap-2">
         <button className="border border-white text-white rounded-md px-5 bg-green-500 outline-none cursor-pointer">
           Edit
@@ -22,4 +23,4 @@ const Container = ({ name, desc }) => {
   );
 };
 
-export default Container;
+export default MainContainer;

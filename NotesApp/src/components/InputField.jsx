@@ -1,9 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Container from "./Container";
+import MainContainer from "./MainContainer";
 
-const InputField = () => {
-  const [notes, setnotes] = useState();
+const InputField = ({ name, desc }) => {
+  const [notes, setnotes] = useState("");
   const [textInput, setTextInput] = useState();
   const [title, settitle] = useState();
   const handlebtn = (e) => {
@@ -19,7 +20,6 @@ const InputField = () => {
 
   const handleDeleteNote = (key) => {
     localStorage.removeItem(key);
-
     const updatedNotes = { ...notes };
     delete updatedNotes[key];
     setnotes(updatedNotes);
@@ -34,11 +34,14 @@ const InputField = () => {
         storedNotes[key] = storedData;
       }
 
+      // console.log(storedNotes);
+
       setnotes(storedNotes);
     };
 
     localStorageData();
   }, []);
+
   return (
     <div className="flex flex-wrap w-full justify-center">
       <div className="flex flex-col justify-center items-center w-full my-5 ">
@@ -68,10 +71,16 @@ const InputField = () => {
           </button>
         </form>
       </div>
-      {notes &&
+      {name && (
+        <div>
+          <Container name={name} desc={desc} />
+        </div>
+      )}
+      {!name &&
+        notes &&
         Object.entries(notes).map(([key, value]) => (
           <div key={key}>
-            <Container
+            <MainContainer
               value={value}
               keynote={key}
               onDelete={handleDeleteNote}
